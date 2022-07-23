@@ -1,26 +1,23 @@
 class NumberContainers {
 public:
-    unordered_map<int,set<int>> umap;
-    unordered_map<int,int> ind;
+    map<int,int> mp;
     NumberContainers() {
-        umap.clear();
-        ind.clear();
     }
     
     void change(int index, int number) {
-        if(ind.find(index)!=ind.end()){
-            umap[ind[index]].erase(index);
-            ind[index] = number;
-        }
+        if(mp.find(index)==mp.end())
+            mp.insert({index, number});
         else
-            ind[index] = number;
-            umap[number].insert(index); 
+            mp[index]=number;
     }
     
     int find(int number) {
-        if(umap.find(number)==umap.end() || umap[number].size()==0)
-            return -1;
-        return *umap[number].begin();
+        int idx = INT_MAX;
+        for(auto i: mp){
+            if(i.second == number)
+                return i.first;
+        }
+        return -1;
     }
 };
 
